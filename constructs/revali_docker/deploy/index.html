@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base href="/"/>
+    <meta charset="utf-8"/>
+    <title>Overview | Revali Docs</title>
+    <meta property="og:title" content="Overview | Revali Docs"/>
+    <link href="/favicon.png" rel="icon" type="image/png"/>
+    <meta name="description" content="Deploy your Revali Docker container to production"/>
+    <meta property="og:description" content="Deploy your Revali Docker container to production"/>
+    <style>
+      .docs .header-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        backdrop-filter: blur(8px);
+      }
+      .docs .main-container {
+        padding: 0;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      @media all and (min-width: 768px) {
+        .docs .main-container {
+          padding-left: 1.25rem;
+          padding-right: 1.25rem;
+        }
+      }
+      .docs .main-container .sidebar-barrier {
+        position: absolute;
+        z-index: 9;
+        opacity: 0.0;
+        pointer-events: none;
+        background-color: var(--background);
+        inset: 0;
+      }
+      .docs .main-container .sidebar-barrier:has(+ .sidebar-container.open) {
+        opacity: 0.5;
+        pointer-events: auto;
+      }
+      .docs .main-container .sidebar-container {
+        position: fixed;
+        top: 4rem;
+        bottom: 0;
+        z-index: 10;
+        width: 17rem;
+        overflow-y: auto;
+        transition: transform 150ms ease-in-out;
+        transform: translateX(-100%);
+      }
+      @media all and (min-width: 768px) {
+        .docs .main-container .sidebar-container {
+          margin-left: -1.25rem;
+        }
+      }
+      @media all and (min-width: 1024px) {
+        .docs .main-container .sidebar-container {
+          margin-left: 0;
+          transform: translateX(0);
+        }
+      }
+      @media all and (max-width: 1023px) {
+        .docs .main-container .sidebar-container {
+          position: fixed;
+          top: 0;
+          border-right-style: solid;
+          border-right-color: #0000000d;
+          border-right-width: 1px;
+          background-color: var(--background);
+        }
+      }
+      .docs .main-container .sidebar-container.open {
+        transform: translateX(0);
+      }
+      .docs .main-container main {
+        position: relative;
+        padding-top: 4rem;
+      }
+      @media all and (min-width: 1024px) {
+        .docs .main-container main {
+          padding-left: 17rem;
+        }
+      }
+      .docs .main-container main > div {
+        display: flex;
+        padding-top: 2rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        justify-content: center;
+      }
+      @media all and (min-width: 1024px) {
+        .docs .main-container main > div {
+          padding-left: 4rem;
+        }
+      }
+      .docs .main-container main > div .content-container {
+        min-width: 0;
+        max-width: 80rem;
+        padding-right: 0;
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: 0%;
+      }
+      @media all and (min-width: 1280px) {
+        .docs .main-container main > div .content-container {
+          padding-right: 3rem;
+        }
+      }
+      .docs .main-container main > div .content-container .content-header {
+        margin-bottom: 2rem;
+        color: var(--content-headings);
+      }
+      .docs .main-container main > div .content-container .content-header h1 {
+        font-size: 2rem;
+        line-height: 2.25rem;
+      }
+      .docs .main-container main > div .content-container .content-header p {
+        margin-top: 0.75rem;
+        font-size: 1.25rem;
+        line-height: 1.25rem;
+      }
+      .docs .main-container main > div .content-container .content-header img {
+        margin-top: 1rem;
+        border-radius: 0.375rem;
+      }
+      .docs .main-container main > div .content-container .content-footer {
+        margin-top: 2rem;
+      }
+      .docs .main-container main > div aside.toc {
+        display: none;
+        position: relative;
+        width: 17rem;
+      }
+      @media all and (min-width: 1280px) {
+        .docs .main-container main > div aside.toc {
+          display: block;
+        }
+      }
+      .docs .main-container main > div aside.toc > div {
+        position: sticky;
+        top: 6rem;
+      }
+      .docs .main-container main > div aside.toc h3 {
+        margin-bottom: 0.5rem;
+        opacity: 0.75;
+        font-size: 0.875rem;
+        font-weight: 600;
+        line-height: 1.25rem;
+      }
+      .docs .main-container main > div aside.toc ul {
+        margin-top: 1rem;
+      }
+      .docs .main-container main > div aside.toc li {
+        margin-top: 0.5rem;
+        font-size: 14px;
+      }
+    </style>
+    <style>
+      .docs .content-header p {
+        opacity: 0.75;
+        line-height: 1.6em;
+      }
+      @media all and (max-width: 1023px) {
+        .docs .header .header-title {
+          flex-shrink: 1;
+          flex-basis: auto;
+        }
+        .docs .header {
+          column-gap: 0.5rem;
+        }
+      }
+      @media all and (max-width: 639px) {
+        .docs .header .github-button {
+          display: none;
+        }
+        .docs .header .header-title span {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+      .breadcrumbs {
+        display: flex;
+        margin-bottom: 0.625rem;
+        opacity: 0.6;
+        column-gap: 0.5rem;
+        font-size: 0.8125rem;
+      }
+      .breadcrumbs a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .breadcrumbs a:hover {
+        text-decoration: underline;
+      }
+      .breadcrumbs .breadcrumb-sep {
+        opacity: 0.5;
+      }
+      .page-nav {
+        display: flex;
+        padding-top: 1.5rem;
+        margin-top: 3rem;
+        border-top-style: solid;
+        border-top-color: color-mix(in srgb, currentColor 12%, transparent);
+        border-top-width: 1px;
+        justify-content: space-between;
+        column-gap: 1rem;
+      }
+      .page-nav .page-nav-link {
+        display: flex;
+        max-width: 48%;
+        padding: 0.75rem 1rem;
+        border: solid color-mix(in srgb, currentColor 12%, transparent) 1px;
+        border-radius: 10px;
+        transition: all 150ms ease-in-out;
+        flex-direction: column;
+        row-gap: 0.125rem;
+        color: inherit;
+        text-decoration: none;
+      }
+      .page-nav .page-nav-link:hover {
+        border: solid color-mix(in srgb, currentColor 28%, transparent) 1px;
+        background-color: color-mix(in srgb, currentColor 4%, transparent);
+      }
+      .page-nav .page-nav-link .page-nav-label {
+        opacity: 0.55;
+        font-size: 0.6875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      .page-nav .page-nav-link .page-nav-title {
+        color: var(--primary);
+        font-size: 0.9375rem;
+        font-weight: 600;
+      }
+      .page-nav .page-nav-next {
+        margin-left: auto;
+        text-align: right;
+      }
+      .content-container table {
+        width: 100%;
+        margin-top: 1.25rem;
+        margin-bottom: 1.25rem;
+        border: solid color-mix(in srgb, currentColor 12%, transparent) 1px;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        display: table;
+        border-collapse: separate;
+        border-spacing: 0;
+      }
+      .content-container table th, td {
+        padding: 0.5rem 0.875rem;
+        text-align: left;
+      }
+      .content-container table thead th {
+        border-bottom-style: solid;
+        border-bottom-color: color-mix(in srgb, currentColor 12%, transparent);
+        border-bottom-width: 1px;
+        font-weight: 600;
+        background-color: color-mix(in srgb, currentColor 4%, transparent);
+      }
+      .content-container table tbody tr + tr td {
+        border-top-style: solid;
+        border-top-color: color-mix(in srgb, currentColor 12%, transparent);
+        border-top-width: 1px;
+      }
+    </style>
+    <link href="https://docs.revali.dev/constructs/revali_docker/deploy/" rel="canonical"/>
+    <meta property="og:url" content="https://docs.revali.dev/constructs/revali_docker/deploy/"/>
+    <meta property="og:image" content="https://docs.revali.dev/images/og/constructs-revali_docker-deploy.png"/>
+    <meta name="twitter:image" content="https://docs.revali.dev/images/og/constructs-revali_docker-deploy.png"/>
+    <meta name="keywords" content="Dart, API framework, backend, server, Flutter, OpenAPI, Swagger, code generation, Revali"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Revali"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <!--$-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+      .header {
+        display: flex;
+        height: 4rem;
+        padding: 0.25rem 1rem;
+        margin-left: auto;
+        margin-right: auto;
+        border-bottom-style: solid;
+        border-bottom-color: #0000000d;
+        border-bottom-width: 1px;
+        align-items: center;
+        column-gap: 1rem;
+      }
+      @media all and (min-width: 768px) {
+        .header {
+          padding-left: 2.5rem;
+          padding-right: 2.5rem;
+        }
+      }
+      .header .header-title {
+        display: inline-flex;
+        align-items: center;
+        column-gap: 0.75rem;
+        flex-basis: 17rem;
+      }
+      .header .header-title img {
+        width: auto;
+        height: 1.5rem;
+      }
+      .header .header-title span {
+        font-weight: 700;
+      }
+      .header .header-content {
+        display: flex;
+        justify-content: end;
+        flex-grow: 1;
+      }
+      .header .header-items {
+        display: flex;
+        column-gap: 0.25rem;
+      }
+    </style>
+    <style>
+      .sidebar-toggle-button {
+        display: none;
+        width: 2rem;
+        height: 2rem;
+        justify-content: center;
+        align-items: center;
+      }
+      @media all and (max-width: 1024px) {
+        [data-has-sidebar] .sidebar-toggle-button {
+          display: flex;
+        }
+      }
+    </style>
+    <style>
+      .section-tabs {
+        display: none;
+        margin-right: auto;
+        column-gap: 0.25rem;
+      }
+      @media all and (min-width: 1024px) {
+        .section-tabs {
+          display: flex;
+        }
+      }
+      .section-tabs .section-tab {
+        display: flex;
+        padding: 0.375rem 0.75rem;
+        border-radius: 0.5rem;
+        opacity: 0.7;
+        transition: all 150ms ease-in-out;
+        align-items: center;
+        color: inherit;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .section-tabs .section-tab:hover {
+        opacity: 1.0;
+        background-color: color-mix(in srgb, currentColor 6%, transparent);
+      }
+      .section-tabs .section-tab.active {
+        opacity: 1.0;
+        color: var(--primary);
+        font-weight: 600;
+        background-color: color-mix(in srgb, currentColor 10%, transparent);
+      }
+    </style>
+    <style>
+      .search-trigger {
+        display: flex;
+        height: 2rem;
+        padding-left: 0.7rem;
+        padding-right: 0.7rem;
+        border: solid color-mix(in srgb, currentColor 15%, transparent) 1px;
+        border-radius: 8px;
+        opacity: 0.8;
+        cursor: pointer;
+        transition: all 150ms ease-in-out;
+        align-items: center;
+        column-gap: 0.5rem;
+        color: inherit;
+        font-size: 0.8125rem;
+        background-color: transparent;
+      }
+      .search-trigger:hover {
+        opacity: 1.0;
+        background-color: color-mix(in srgb, currentColor 6%, transparent);
+      }
+      .search-trigger .search-trigger-label {
+        display: none;
+      }
+      .search-trigger .search-trigger-keys {
+        display: none;
+        opacity: 0.7;
+        font-family: monospace;
+        font-size: 0.6875rem;
+      }
+      @media all and (min-width: 640px) {
+        .search-trigger {
+          width: 12rem;
+          justify-content: start;
+        }
+        .search-trigger .search-trigger-label {
+          display: block;
+        }
+        .search-trigger .search-trigger-keys {
+          display: block;
+          margin-left: auto;
+        }
+      }
+      .search-dialog {
+        display: none;
+        width: 100%;
+        height: 100%;
+        max-width: initial;
+        max-height: initial;
+        padding: 3rem 1rem;
+        margin: 0;
+        border: none;
+        overflow: hidden;
+        color: inherit;
+        background-color: transparent;
+      }
+      .search-dialog[open] {
+        display: flex;
+        justify-content: center;
+        align-items: start;
+      }
+      .search-dialog::backdrop {
+        background-color: rgba(15, 23, 42, .45);
+        backdrop-filter: blur(4px);
+      }
+      @media all and (min-width: 768px) {
+        .search-dialog {
+          padding: 6rem 1rem 3rem 1rem;
+        }
+      }
+      .search-panel {
+        display: flex;
+        width: 100%;
+        max-width: 40rem;
+        max-height: 100%;
+        border: solid color-mix(in srgb, currentColor 12%, transparent) 1px;
+        border-radius: 14px;
+        overflow: hidden;
+        flex-direction: column;
+        background-color: var(--background);
+        box-shadow: 0 24px 60px rgba(0,0,0,.28);
+      }
+      .search-field {
+        display: flex;
+        height: 3.5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        border-bottom-style: solid;
+        border-bottom-color: color-mix(in srgb, currentColor 12%, transparent);
+        border-bottom-width: 1px;
+        align-items: center;
+        column-gap: 0.75rem;
+      }
+      .search-field svg {
+        opacity: 0.5;
+        flex-shrink: 0;
+      }
+      .search-field input {
+        min-width: 0;
+        border: none;
+        outline-style: none;
+        flex-grow: 1;
+        color: inherit;
+        font-family: inherit;
+        font-size: 1rem;
+        background-color: transparent;
+      }
+      .search-dismiss {
+        padding: 0.25rem 0.5rem;
+        border: solid color-mix(in srgb, currentColor 18%, transparent) 1px;
+        border-radius: 6px;
+        opacity: 0.6;
+        cursor: pointer;
+        flex-shrink: 0;
+        color: inherit;
+        font-size: 0.6875rem;
+        background-color: transparent;
+      }
+      .search-dismiss:hover {
+        opacity: 1.0;
+      }
+      .search-results {
+        padding: 0.5rem;
+        overflow-y: auto;
+      }
+      .search-empty {
+        padding: 1.5rem;
+        opacity: 0.7;
+        text-align: center;
+        font-size: 0.875rem;
+      }
+      .search-empty .search-hint {
+        display: block;
+        margin-top: 0.5rem;
+        opacity: 0.8;
+        font-size: 0.8125rem;
+      }
+      .search-hit-list {
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+      }
+      .search-hit {
+        display: block;
+        padding: 0.625rem 0.875rem;
+        border-radius: 10px;
+        color: inherit;
+        text-decoration: none;
+      }
+      .search-hit[data-selected] {
+        background-color: color-mix(in srgb, currentColor 8%, transparent);
+      }
+      .search-hit .search-hit-crumb {
+        display: flex;
+        opacity: 0.6;
+        column-gap: 0.375rem;
+        font-size: 0.6875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      .search-hit .search-hit-crumb .search-hit-sep {
+        opacity: 0.5;
+      }
+      .search-hit .search-hit-heading {
+        margin-top: 0.125rem;
+        font-size: 0.9375rem;
+        font-weight: 600;
+      }
+      .search-hit .search-hit-snippet {
+        margin-top: 0.1875rem;
+        opacity: 0.72;
+        font-size: 0.8125rem;
+        line-height: 1.4em;
+      }
+      .search-hit mark {
+        padding-left: 1px;
+        padding-right: 1px;
+        border-radius: 3px;
+        color: var(--primary);
+        font-weight: 600;
+        background-color: color-mix(in srgb, currentColor 18%, transparent);
+      }
+      .search-footer {
+        display: flex;
+        padding: 0.625rem 1rem;
+        border-top-style: solid;
+        border-top-color: color-mix(in srgb, currentColor 12%, transparent);
+        border-top-width: 1px;
+        opacity: 0.55;
+        column-gap: 1rem;
+        font-size: 0.6875rem;
+      }
+      .search-footer kbd {
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+        margin-right: 0.25rem;
+        border: solid color-mix(in srgb, currentColor 20%, transparent) 1px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+    </style>
+    <style>
+      .home-link {
+        display: none;
+        padding: 0.4rem 0.7rem;
+        border-radius: 0.5rem;
+        opacity: 0.7;
+        transition: all 150ms ease-in-out;
+        align-items: center;
+        color: inherit;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      @media all and (min-width: 1024px) {
+        .home-link {
+          display: flex;
+        }
+      }
+      .home-link:hover {
+        opacity: 1.0;
+        background-color: color-mix(in srgb, currentColor 6%, transparent);
+      }
+    </style>
+    <script id="theme-script">
+                  let userTheme = window.localStorage.getItem('jaspr:theme');
+                  if (userTheme != null) {
+                    document.documentElement.setAttribute('data-theme', userTheme);
+                  } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                  } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                  }
+                
+    </script>
+    <style>
+      .docs-sidebar {
+        position: relative;
+        padding: 0.75rem 0.75rem 3rem 0.5rem;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+      }
+      @media all and (min-width: 1024px) {
+        .docs-sidebar {
+          padding-top: 1rem;
+        }
+      }
+      .docs-sidebar .sidebar-close {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        border: unset;
+        cursor: pointer;
+        color: inherit;
+        background-color: transparent;
+      }
+      @media all and (min-width: 1024px) {
+        .docs-sidebar .sidebar-close {
+          display: none;
+        }
+      }
+      .docs-sidebar .docs-sidebar-section {
+        display: flex;
+        padding-left: 0.75rem;
+        padding-bottom: 0.75rem;
+        margin-bottom: 0.5rem;
+        border-bottom-style: solid;
+        border-bottom-color: color-mix(in srgb, currentColor 12%, transparent);
+        border-bottom-width: 1px;
+        align-items: center;
+        column-gap: 0.5rem;
+        color: var(--primary);
+        font-size: 0.8125rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      .docs-sidebar .docs-sidebar-section .docs-sidebar-section-icon {
+        display: flex;
+      }
+      @media all and (min-width: 1024px) {
+        .docs-sidebar .docs-sidebar-section {
+          display: none;
+        }
+      }
+      .docs-sidebar ul {
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+      }
+      .docs-sidebar .docs-sidebar-link {
+        display: flex;
+        padding: 0.375rem 0.75rem;
+        margin-bottom: 1px;
+        border-radius: 0.375rem;
+        opacity: 0.75;
+        transition: all 150ms ease-in-out;
+        align-items: center;
+        column-gap: 0.5rem;
+        color: inherit;
+        text-decoration: none;
+      }
+      .docs-sidebar .docs-sidebar-link:hover {
+        opacity: 1.0;
+        background-color: color-mix(in srgb, currentColor 6%, transparent);
+      }
+      .docs-sidebar .docs-sidebar-link.active {
+        opacity: 1.0;
+        color: var(--primary);
+        font-weight: 600;
+        background-color: color-mix(in srgb, currentColor 14%, transparent);
+      }
+      .docs-sidebar .docs-sidebar-link span:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .docs-sidebar .docs-sidebar-badge {
+        padding-left: 0.3125rem;
+        padding-right: 0.3125rem;
+        border-radius: 999px;
+        flex-shrink: 0;
+        color: var(--primary);
+        font-size: 0.625rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        background-color: color-mix(in srgb, currentColor 15%, transparent);
+      }
+      .docs-sidebar .docs-sidebar-group-item {
+        list-style-type: none;
+      }
+      .docs-sidebar .docs-sidebar-group > ul {
+        padding-left: 0.5rem;
+        margin-left: 1.0625rem;
+        margin-bottom: 0.5rem;
+        border-left-style: solid;
+        border-left-color: color-mix(in srgb, currentColor 12%, transparent);
+        border-left-width: 1px;
+      }
+      .docs-sidebar .docs-sidebar-group[open] > .docs-sidebar-summary .docs-sidebar-chevron svg {
+        transform: rotate(90deg);
+      }
+      .docs-sidebar .docs-sidebar-group.nested > .docs-sidebar-summary {
+        opacity: 0.85;
+        font-size: 0.8125rem;
+        font-weight: 600;
+      }
+      .docs-sidebar .docs-sidebar-group.nested > ul {
+        margin-left: 0.5rem;
+        margin-bottom: 0.25rem;
+      }
+      .docs-sidebar .docs-sidebar-summary {
+        display: flex;
+        padding: 0.4375rem 0.5rem;
+        border-radius: 0.375rem;
+        cursor: pointer;
+        user-select: none;
+        -webkit-user-select: none;
+        align-items: center;
+        column-gap: 0.5rem;
+        list-style-type: none;
+        font-weight: 600;
+      }
+      .docs-sidebar .docs-sidebar-summary::-webkit-details-marker {
+        display: none;
+      }
+      .docs-sidebar .docs-sidebar-summary:hover {
+        background-color: color-mix(in srgb, currentColor 6%, transparent);
+      }
+      .docs-sidebar .docs-sidebar-summary .docs-sidebar-icon {
+        display: flex;
+        opacity: 0.6;
+        flex-shrink: 0;
+      }
+      .docs-sidebar .docs-sidebar-summary .docs-sidebar-title {
+        flex-grow: 1;
+      }
+      .docs-sidebar .docs-sidebar-summary .docs-sidebar-chevron {
+        display: flex;
+        opacity: 0.45;
+      }
+      .docs-sidebar .docs-sidebar-summary .docs-sidebar-chevron svg {
+        transition: transform 150ms ease-in-out;
+      }
+    </style>
+    <style>
+      :root {
+        --primary: oklch(0.511 0.262 276.966);
+        --background: white;
+        --text: oklch(0.373 0.034 259.733);
+        --content-headings: oklch(0.21 0.034 264.665);
+        --content-lead: oklch(0.446 0.03 256.802);
+        --content-links: oklch(0.21 0.034 264.665);
+        --content-bold: oklch(0.21 0.034 264.665);
+        --content-counters: oklch(0.551 0.027 264.364);
+        --content-bullets: oklch(0.872 0.01 258.338);
+        --content-hr: oklch(0.928 0.006 264.531);
+        --content-quotes: oklch(0.21 0.034 264.665);
+        --content-quote-borders: oklch(0.928 0.006 264.531);
+        --content-captions: oklch(0.551 0.027 264.364);
+        --content-kbd: oklch(0.21 0.034 264.665);
+        --content-kbd-shadows: oklch(0.21 0.034 264.665);
+        --content-code: oklch(0.21 0.034 264.665);
+        --content-pre-code: oklch(0.928 0.006 264.531);
+        --content-pre-bg: oklch(0.278 0.033 256.848);
+        --content-th-borders: oklch(0.872 0.01 258.338);
+        --content-td-borders: oklch(0.928 0.006 264.531);
+      }
+      :root[data-theme="dark"] {
+        --primary: oklch(0.673 0.182 276.935);
+        --background: oklch(0.141 0.005 285.823);
+        --text: oklch(0.928 0.006 264.531);
+        --content-headings: white;
+        --content-lead: oklch(0.707 0.022 261.325);
+        --content-links: white;
+        --content-bold: white;
+        --content-counters: oklch(0.707 0.022 261.325);
+        --content-bullets: oklch(0.446 0.03 256.802);
+        --content-hr: oklch(0.373 0.034 259.733);
+        --content-quotes: oklch(0.967 0.003 264.542);
+        --content-quote-borders: oklch(0.373 0.034 259.733);
+        --content-captions: oklch(0.707 0.022 261.325);
+        --content-kbd: white;
+        --content-kbd-shadows: white;
+        --content-code: white;
+        --content-pre-code: oklch(0.872 0.01 258.338);
+        --content-pre-bg: rgb(0 0 0 / 50%);
+        --content-th-borders: oklch(0.446 0.03 256.802);
+        --content-td-borders: oklch(0.373 0.034 259.733);
+      }
+      *, :after, :before {
+        box-sizing: border-box;
+        border: solid #e5e7eb 0;
+      }
+      :host,html {
+        line-height: 1.5em;
+        -webkit-text-size-adjust: 100%;
+        -moz-tab-size: 4;
+        tab-size: 4;
+        font-feature-settings: normal;
+        font-variation-settings: normal;
+        -webkit-tap-highlight-color: transparent;
+      }
+      body {
+        margin: 0;
+        line-height: inherit;
+        -webkit-font-smoothing: antialiased;
+      }
+      hr {
+        height: 0;
+        border-top-style: solid;
+        border-top-width: 1px;
+        color: inherit;
+      }
+      a {
+        color: inherit;
+        text-decoration: inherit;
+      }
+      b, strong {
+        font-weight: bolder;
+      }
+      code, kbd, pre, samp {
+        font-size: 1em;
+        font-feature-settings: normal;
+        font-variation-settings: normal;
+      }
+      small {
+        font-size: 80%;
+      }
+      sub, sup {
+        position: relative;
+        font-size: 75%;
+        line-height: 0;
+        vertical-align: baseline;
+      }
+      sub {
+        position: relative;
+        bottom: -0.25em;
+      }
+      sup {
+        position: relative;
+        top: -0.5em;
+      }
+      table {
+        border: solid inherit;
+        text-indent: 0;
+        border-collapse: collapse;
+      }
+      button, input, optgroup, select, textarea {
+        padding: 0;
+        margin: 0;
+        color: inherit;
+        font-family: inherit;
+        font-size: 100%;
+        font-weight: inherit;
+        letter-spacing: inherit;
+        line-height: inherit;
+        font-feature-settings: inherit;
+        font-variation-settings: inherit;
+      }
+      button, select {
+        text-transform: none;
+      }
+      button, input[type=button], input[type=reset], input[type=submit] {
+        -webkit-appearance: button;
+        background-color: transparent;
+        background-image: none;
+      }
+      :-moz-focusring {
+        outline: auto;
+      }
+      :-moz-ui-invalid {
+        box-shadow: none;
+      }
+      progress {
+        vertical-align: baseline;
+      }
+      ::-webkit-inner-spin-button, ::-webkit-outer-spin-button {
+        height: auto;
+      }
+      [type=search] {
+        -webkit-appearance: textfield;
+        outline-offset: -2px;
+      }
+      ::-webkit-search-decoration {
+        -webkit-appearance: none;
+      }
+      ::-webkit-file-upload-button {
+        -webkit-appearance: button;
+        font: inherit;
+      }
+      summary {
+        display: list-item;
+      }
+      blockquote, dd, dl, figure, h1, h2, h3, h4, h5, h6, hr, p, pre {
+        margin: 0;
+      }
+      fieldset {
+        margin: 0;
+      }
+      fieldset, legend {
+        padding: 0;
+      }
+      menu, ol, ul {
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+      }
+      dialog {
+        padding: 0;
+      }
+      textarea {
+        resize: vertical;
+      }
+      input::placeholder, textarea::placeholder {
+        opacity: 1.0;
+        color: #9ca3af;
+      }
+      [role=button], button {
+        cursor: pointer;
+      }
+      :disabled {
+        cursor: default;
+      }
+      audio, canvas, embed, iframe, img, object, svg, video {
+        display: block;
+        vertical-align: middle;
+      }
+      img, video {
+        height: auto;
+        max-width: 100%;
+      }
+      :root {
+        --content-font: 'Open Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+        --content-code-font: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+      }
+      :host,html {
+        font-family: var(--content-font);
+      }
+      code, kbd, pre, samp {
+        font-family: var(--content-code-font);
+      }
+      body {
+        color: var(--text);
+        background-color: var(--background);
+      }
+      .content {
+        color: var(--text);
+        font-size: 1rem;
+        line-height: 1.75em;
+      }
+      .content :where(a):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: var(--content-links);
+        font-weight: 500;
+        text-decoration: underline;
+      }
+      .content :where(strong):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: var(--content-bold);
+        font-weight: 600;
+      }
+      .content :where(a strong):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: inherit;
+      }
+      .content :where(blockquote strong):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: inherit;
+      }
+      .content :where(thead th strong):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: inherit;
+      }
+      .content :where(ol):not(:where([class~=not-content],[class~=not-content] *)) {
+        list-style-type: decimal;
+      }
+      .content :where(ol[type="A"]):not(:where([class~=not-content],[class~=not-content] *)) {
+        list-style-type: upper-alpha;
+      }
+      .content :where(ol[type="a"]):not(:where([class~=not-content],[class~=not-content] *)) {
+        list-style-type: lower-alpha;
+      }
+      .content :where(ol[type="A" s]):not(:where([class~=not-content],[class~=not-content] *)) {
+        list-style-type: upper-alpha;
+      }
+      .content :where(ol[type="a" s]):not(:where([class~=not-content],[class~=not-content] *)) {
+        list-style-type: lower-alpha;
+      }
+      .content :where(ol[type="I"]):not(:where([class~=not-content],[class~=not-content] *)) {
+        list-style-type: upper-roman;
+      }
+      .content :where(ol[type="i"]):not(:where([class~=not-content],[class~=not-content] *)) {
+        list-style-type: lower-roman;
+      }
+      .content :where(ol[type="I" s]):not(:where([class~=not-content],[class~=not-content] *)) {
+        list-style-type: upper-roman;
+      }
+      .content :where(ol[type="i" s]):not(:where([class~=not-content],[class~=not-content] *)) {
+        list-style-type: lower-roman;
+      }
+      .content :where(ol[type="1"]):not(:where([class~=not-content],[class~=not-content] *)) {
+        list-style-type: decimal;
+      }
+      .content :where(ul):not(:where([class~=not-content],[class~=not-content] *)) {
+        list-style-type: disc;
+      }
+      .content :where(ol > li::marker):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: var(--content-counters);
+        font-weight: 400;
+      }
+      .content :where(ul > li::marker):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: var(--content-bullets);
+      }
+      .content :where(dt):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: var(--content-headings);
+        font-weight: 600;
+      }
+      .content :where(hr):not(:where([class~=not-content],[class~=not-content] *)) {
+        border: solid var(--content-hr);
+        border-top-width: 1px;
+      }
+      .content :where(blockquote):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: var(--content-quotes);
+        font-weight: 500;
+        font-style: italic;
+        border-inline-start-width: 0.25rem;
+        border-inline-start-color: var(--content-quote-borders);
+        quotes: "\201C""\201D""\2018""\2019";
+      }
+      .content :where(blockquote p:first-of-type::before):not(:where([class~=not-content],[class~=not-content] *)) {
+        content: open-quote;
+      }
+      .content :where(blockquote p:last-of-type::after):not(:where([class~=not-content],[class~=not-content] *)) {
+        content: close-quote;
+      }
+      .content :where(h1):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: var(--content-headings);
+        font-weight: 800;
+      }
+      .content :where(h1 strong):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: inherit;
+        font-weight: 900;
+      }
+      .content :where(h2):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: var(--content-headings);
+        font-weight: 700;
+      }
+      .content :where(h2 strong):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: inherit;
+        font-weight: 800;
+      }
+      .content :where(h3):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: var(--content-headings);
+        font-weight: 600;
+      }
+      .content :where(h3 strong):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: inherit;
+        font-weight: 700;
+      }
+      .content :where(h4):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: var(--content-headings);
+        font-weight: 600;
+      }
+      .content :where(h4 strong):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: inherit;
+        font-weight: 700;
+      }
+      .content :where(picture):not(:where([class~=not-content],[class~=not-content] *)) {
+        display: block;
+      }
+      .content :where(kbd):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: var(--content-kbd);
+        font-family: inherit;
+        font-weight: 500;
+      }
+      .content :where(code):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: var(--content-code);
+        font-weight: 600;
+      }
+      .content :where(code::before):not(:where([class~=not-content],[class~=not-content] *)) {
+        content: "`";
+      }
+      .content :where(code::after):not(:where([class~=not-content],[class~=not-content] *)) {
+        content: "`";
+      }
+      .content :where(a code):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: inherit;
+      }
+      .content :where(h1 code):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: inherit;
+      }
+      .content :where(h2 code):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: inherit;
+      }
+      .content :where(h3 code):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: inherit;
+      }
+      .content :where(h4 code):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: inherit;
+      }
+      .content :where(blockquote code):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: inherit;
+      }
+      .content :where(thead th code):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: inherit;
+      }
+      .content :where(pre):not(:where([class~=not-content],[class~=not-content] *)) {
+        overflow-x: auto;
+        color: var(--content-pre-code);
+        font-weight: 400;
+        background-color: var(--content-pre-bg);
+      }
+      .content :where(pre code):not(:where([class~=not-content],[class~=not-content] *)) {
+        padding: 0;
+        border: solid 0;
+        border-radius: 0;
+        color: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        background-color: transparent;
+      }
+      .content :where(pre code::before):not(:where([class~=not-content],[class~=not-content] *)) {
+        content: none;
+      }
+      .content :where(pre code::after):not(:where([class~=not-content],[class~=not-content] *)) {
+        content: none;
+      }
+      .content :where(table):not(:where([class~=not-content],[class~=not-content] *)) {
+        width: 100%;
+        margin-top: 2em;
+        margin-bottom: 2em;
+        table-layout: auto;
+      }
+      .content :where(thead):not(:where([class~=not-content],[class~=not-content] *)) {
+        border-bottom-style: solid;
+        border-bottom-color: var(--content-th-borders);
+        border-bottom-width: 1px;
+      }
+      .content :where(thead th):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: var(--content-headings);
+        font-weight: 600;
+        vertical-align: bottom;
+      }
+      .content :where(tbody tr):not(:where([class~=not-content],[class~=not-content] *)) {
+        border-bottom-style: solid;
+        border-bottom-color: var(--content-td-borders);
+        border-bottom-width: 1px;
+      }
+      .content :where(tbody tr:last-child):not(:where([class~=not-content],[class~=not-content] *)) {
+        border-bottom-style: solid;
+        border-bottom-width: 0;
+      }
+      .content :where(tbody td):not(:where([class~=not-content],[class~=not-content] *)) {
+        vertical-align: baseline;
+      }
+      .content :where(tfoot):not(:where([class~=not-content],[class~=not-content] *)) {
+        border-top-style: solid;
+        border-top-color: var(--content-th-borders);
+        border-top-width: 1px;
+      }
+      .content :where(tfoot td):not(:where([class~=not-content],[class~=not-content] *)) {
+        vertical-align: top;
+      }
+      .content :where(th, td):not(:where([class~=not-content],[class~=not-content] *)) {
+        text-align: start;
+      }
+      .content :where(figcaption):not(:where([class~=not-content],[class~=not-content] *)) {
+        color: var(--content-captions);
+      }
+      .content :where(p):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 1.25em;
+        margin-bottom: 1.25em;
+      }
+      .content :where(blockquote):not(:where([class~=not-content],[class~=not-content] *)) {
+        padding-left: 1em;
+        margin-top: 1.6em;
+        margin-bottom: 1.6em;
+      }
+      .content :where(h1):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 0;
+        margin-bottom: 0.88em;
+        font-size: 2.25em;
+        line-height: 1.11em;
+      }
+      .content :where(h2):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 1.5em;
+        margin-bottom: 1em;
+        font-size: 1.5em;
+        line-height: 1.33em;
+      }
+      .content :where(h3):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 1.6em;
+        margin-bottom: 0.6em;
+        font-size: 1.25em;
+        line-height: 1.6em;
+      }
+      .content :where(h4):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 2em;
+        margin-bottom: 0.5em;
+        line-height: 1.5em;
+      }
+      .content :where(img):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 2em;
+        margin-bottom: 2em;
+      }
+      .content :where(picture):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 2em;
+        margin-bottom: 2em;
+      }
+      .content :where(picture > img):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+      .content :where(video):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 2em;
+        margin-bottom: 2em;
+      }
+      .content :where(kbd):not(:where([class~=not-content],[class~=not-content] *)) {
+        padding: 0.1875rem 0.375rem 0.1875rem 0.375rem;
+        border-radius: 0.3125rem;
+        font-size: 0.875em;
+      }
+      .content :where(code):not(:where([class~=not-content],[class~=not-content] *)) {
+        font-size: 0.875em;
+      }
+      .content :where(h2 code):not(:where([class~=not-content],[class~=not-content] *)) {
+        font-size: 0.875em;
+      }
+      .content :where(h3 code):not(:where([class~=not-content],[class~=not-content] *)) {
+        font-size: 0.9em;
+      }
+      .content :where(pre):not(:where([class~=not-content],[class~=not-content] *)) {
+        padding: 0.857em 1.14em 0.857em 1.14em;
+        margin-top: 1.71em;
+        margin-bottom: 1.71em;
+        border-radius: 0.375rem;
+        font-size: 0.875em;
+        line-height: 1.71em;
+      }
+      .content :where(ol):not(:where([class~=not-content],[class~=not-content] *)) {
+        padding-left: 1.625em;
+        margin-top: 1.25em;
+        margin-bottom: 1.25em;
+      }
+      .content :where(ul):not(:where([class~=not-content],[class~=not-content] *)) {
+        padding-left: 1.625em;
+        margin-top: 1.25em;
+        margin-bottom: 1.25em;
+      }
+      .content :where(li):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .content :where(ol > li):not(:where([class~=not-content],[class~=not-content] *)) {
+        padding-left: 0.375em;
+      }
+      .content :where(ul > li):not(:where([class~=not-content],[class~=not-content] *)) {
+        padding-left: 0.375em;
+      }
+      .content :where(> ul > li p):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 0.75em;
+        margin-bottom: 0.75em;
+      }
+      .content :where(> ul > li > p:first-child):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 1.25em;
+      }
+      .content :where(> ul > li > p:last-child):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-bottom: 1.25em;
+      }
+      .content :where(> ol > li > p:first-child):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 1.25em;
+      }
+      .content :where(> ol > li > p:last-child):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-bottom: 1.25em;
+      }
+      .content :where(ul ul, ul ol, ol ul, ol ol):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 0.75em;
+        margin-bottom: 0.75em;
+      }
+      .content :where(dl):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 1.25em;
+        margin-bottom: 1.25em;
+      }
+      .content :where(dt):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 1.25em;
+      }
+      .content :where(dd):not(:where([class~=not-content],[class~=not-content] *)) {
+        padding-left: 1.625em;
+        margin-top: 0.5em;
+      }
+      .content :where(hr):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 3em;
+        margin-bottom: 3em;
+      }
+      .content :where(hr + *):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 0;
+      }
+      .content :where(h2 + *):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 0;
+      }
+      .content :where(h3 + *):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 0;
+      }
+      .content :where(h4 + *):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 0;
+      }
+      .content :where(table):not(:where([class~=not-content],[class~=not-content] *)) {
+        font-size: 0.875em;
+        line-height: 1.71em;
+      }
+      .content :where(thead th):not(:where([class~=not-content],[class~=not-content] *)) {
+        padding-left: 0.57em;
+        padding-right: 0.57em;
+        padding-bottom: 0.57em;
+      }
+      .content :where(thead th:first-child):not(:where([class~=not-content],[class~=not-content] *)) {
+        padding-left: 0;
+      }
+      .content :where(thead th:last-child):not(:where([class~=not-content],[class~=not-content] *)) {
+        padding-right: 0;
+      }
+      .content :where(tbody td, tfoot td):not(:where([class~=not-content],[class~=not-content] *)) {
+        padding: 0.57em 0.57em 0.57em 0.57em;
+      }
+      .content :where(tbody td:first-child, tfoot td:first-child):not(:where([class~=not-content],[class~=not-content] *)) {
+        padding-left: 0;
+      }
+      .content :where(tbody td:last-child, tfoot td:last-child):not(:where([class~=not-content],[class~=not-content] *)) {
+        padding-right: 0;
+      }
+      .content :where(figure):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 2em;
+        margin-bottom: 2em;
+      }
+      .content :where(figure > *):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+      .content :where(figcaption):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 0.857em;
+        font-size: 0.875em;
+        line-height: 1.42em;
+      }
+      .content :where(> :first-child):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-top: 0;
+      }
+      .content :where(> :last-child):not(:where([class~=not-content],[class~=not-content] *)) {
+        margin-bottom: 0;
+      }
+    </style>
+    <style>
+      :is(h1, h2, h3, h4, h5, h6)[anchor="true"] {
+        display: flex;
+        align-items: baseline;
+        column-gap: 0.5rem;
+      }
+      :is(h1, h2, h3, h4, h5, h6)[anchor="true"] > a {
+        opacity: 0.0;
+        transition: opacity 300ms;
+        font-size: 0.8em;
+        text-decoration: none;
+      }
+      :is(h1, h2, h3, h4, h5, h6)[anchor="true"]:hover > a {
+        opacity: 0.8;
+      }
+      :is(h1, h2, h3, h4, h5, h6)[anchor="true"] > a:hover {
+        opacity: 1.0;
+      }
+    </style>
+    <!--/-->
+    <script src="main.client.dart.js" defer></script>
+    <style>
+      .code-block {
+        position: relative;
+      }
+      .code-block button {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        z-index: 10;
+        width: 1.25rem;
+        height: 1.25rem;
+        opacity: 0.0;
+        color: white;
+      }
+      .code-block:hover button {
+        opacity: 0.75;
+      }
+      .github-button {
+        display: flex;
+        padding: 0.4rem 0.7rem;
+        border-radius: 8px;
+        align-items: center;
+        column-gap: 0.5rem;
+        font-size: 0.7rem;
+        text-decoration: none;
+        line-height: 1.2em;
+      }
+      .github-button:hover {
+        background-color: color-mix(in srgb, currentColor 5%, transparent);
+      }
+      .github-button * {
+        transition: opacity 200ms ease-in-out;
+      }
+      .github-button:hover * {
+        opacity: 1 !important;
+      }
+      .github-button .github-icon {
+        width: 1.2rem;
+      }
+      .github-button .github-info {
+        display: flex;
+        flex-direction: column;
+      }
+      .github-button .github-info > span:first-child {
+        margin-bottom: 2px;
+        opacity: 0.9;
+        font-family: monospace;
+      }
+      .github-button .github-info > span:last-child {
+        display: flex;
+        opacity: 0.7;
+        align-items: center;
+        column-gap: 0.3em;
+        font-size: 0.9em;
+        font-weight: 800;
+      }
+      .github-button .github-info > span:last-child span {
+        font-weight: 500;
+      }
+      figure.image {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .theme-toggle {
+        display: flex;
+        padding: 0.7rem;
+        border: unset;
+        border-radius: 8px;
+        outline: unset;
+        align-items: center;
+        background-color: transparent;
+      }
+      .theme-toggle:hover {
+        background-color: color-mix(in srgb, currentColor 5%, transparent);
+      }
+      figure.image.zoomable img {
+        cursor: zoom-in;
+      }
+      dialog.zoom-modal {
+        width: 100vw;
+        height: 100vh;
+        max-width: initial;
+        max-height: initial;
+        padding: 0;
+        margin: 0;
+        border: none;
+        outline-style: none;
+        overflow: hidden;
+        background-color: transparent;
+      }
+      dialog.zoom-modal .image-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background-color: var(--background);
+      }
+      dialog.zoom-modal img {
+        position: absolute;
+        cursor: zoom-out;
+        transition: transform 300ms;
+        transform-origin: top left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="docs">
+      <div class="header-container" data-has-sidebar>
+        <header class="header">
+          <!--@jaspr_content:sidebar_toggle_button-->
+          <button class="sidebar-toggle-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+            
+          </button>
+          <!--/@jaspr_content:sidebar_toggle_button-->
+          <a class="header-title" href="/"><img alt="Logo" src="/images/logo.svg"/><span>Revali</span></a>
+          <div class="header-content">
+            <div class="header-items">
+              <nav class="section-tabs" aria-label="Documentation sections">
+                <a class="section-tab" title="Install the framework, configure your app, and run the CLI." href="/revali">Revali</a>
+                <a class="section-tab active" title="The packages that generate your server, client, docs and Dockerfile." aria-current="true" href="/constructs">Constructs</a>
+                <a class="section-tab" title="Write your own code generator against the Revali pipeline." href="/create-constructs">Create Constructs</a>
+              </nav>
+              <!--@search-->
+              <button class="search-trigger" aria-label="Search the documentation" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <span class="search-trigger-label">Search</span>
+                <span class="search-trigger-keys">⌘K</span>
+              </button>
+              <!--/@search-->
+              <a class="home-link" title="The Revali home page" href="https://revali.dev">revali.dev</a>
+              <!--@jaspr_content:github_button data={"repo":"mrgnhnt96/revali"}-->
+              <a class="github-button not-content" href="https://github.com/mrgnhnt96/revali" target="_blank">
+                <div class="github-icon">
+                  <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path>
+                  </svg>
+                </div>
+                <div class="github-info">
+                  <span>mrgnhnt96/revali</span>
+                  <span>★<span style="opacity: 0.0">9999</span><span></span>⑂<span style="opacity: 0.0">99</span></span>
+                </div>
+              </a>
+              <!--/@jaspr_content:github_button-->
+              <!--@jaspr_content:theme_toggle-->
+              <button class="theme-toggle" style="visibility: hidden" aria-label="Theme Toggle">
+                <span><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="20px" height="20px"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg></span>
+                <span style="display: none"><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="20px" height="20px"><circle cx="12" cy="12" r="4"></circle><path d="M12 4h.01"></path><path d="M20 12h.01"></path><path d="M12 20h.01"></path><path d="M4 12h.01"></path><path d="M17.657 6.343h.01"></path><path d="M17.657 17.657h.01"></path><path d="M6.343 17.657h.01"></path><path d="M6.343 6.343h.01"></path></svg></span>
+              </button>
+              <!--/@jaspr_content:theme_toggle-->
+            </div>
+          </div>
+        </header>
+      </div>
+      <div class="main-container">
+        <div class="sidebar-barrier" role="button"></div>
+        <div class="sidebar-container">
+          <nav class="docs-sidebar" aria-label="Constructs">
+            <button class="sidebar-close" aria-label="Close navigation" type="button">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+            <div class="docs-sidebar-section">
+              <span class="docs-sidebar-section-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="7" height="7" x="14" y="3" rx="1"/><path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"/></svg></span>
+              <span>Constructs</span>
+            </div>
+            <ul class="docs-sidebar-list">
+              <li><a class="docs-sidebar-link" href="/constructs"><span>Overview</span></a></li>
+              <li class="docs-sidebar-group-item">
+                <details class="docs-sidebar-group"><summary class="docs-sidebar-summary"><span class="docs-sidebar-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg></span><span class="docs-sidebar-title">Revali Server</span><span class="docs-sidebar-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span></summary><ul><li><a class="docs-sidebar-link" href="/constructs/revali_server"><span>Overview</span></a></li><li class="docs-sidebar-group-item"><details class="docs-sidebar-group nested"><summary class="docs-sidebar-summary"><span class="docs-sidebar-title">Getting Started</span><span class="docs-sidebar-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span></summary><ul><li><a class="docs-sidebar-link" href="/constructs/revali_server/getting-started/installation"><span>Installation</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/getting-started/cli"><span>CLI</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/getting-started/create-your-first-endpoint"><span>Create Your First Endpoint</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/getting-started/run-the-server"><span>Run the Server</span></a></li></ul></details></li><li class="docs-sidebar-group-item"><details class="docs-sidebar-group nested"><summary class="docs-sidebar-summary"><span class="docs-sidebar-title">Core</span><span class="docs-sidebar-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span></summary><ul><li><a class="docs-sidebar-link" href="/constructs/revali_server/core/controllers"><span>Controllers</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/core/methods"><span>HTTP Methods</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/core/binding"><span>Binding</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/core/implied_binding"><span>Implied Binding</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/core/pipes"><span>Pipes</span></a></li></ul></details></li><li class="docs-sidebar-group-item"><details class="docs-sidebar-group nested"><summary class="docs-sidebar-summary"><span class="docs-sidebar-title">Request</span><span class="docs-sidebar-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span></summary><ul><li><a class="docs-sidebar-link" href="/constructs/revali_server/request"><span>Overview</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/request/body"><span>Body</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/request/headers"><span>Headers</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/request/client-ip"><span>Client IP</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/request/redirect"><span>Redirect</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/request/head-requests"><span>HEAD Requests</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/request/options-requests"><span>OPTIONS Requests</span></a></li></ul></details></li><li class="docs-sidebar-group-item"><details class="docs-sidebar-group nested"><summary class="docs-sidebar-summary"><span class="docs-sidebar-title">Response</span><span class="docs-sidebar-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span></summary><ul><li><a class="docs-sidebar-link" href="/constructs/revali_server/response"><span>Overview</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/response/body"><span>Body</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/response/headers"><span>Headers</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/response/status-code"><span>Status Code</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/response/cookies"><span>Cookies</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/response/public"><span>Public Files</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/response/server-sent-events"><span>Server-Sent Events</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/response/websockets"><span>WebSockets</span></a></li></ul></details></li><li class="docs-sidebar-group-item"><details class="docs-sidebar-group nested"><summary class="docs-sidebar-summary"><span class="docs-sidebar-title">Context</span><span class="docs-sidebar-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span></summary><ul><li><a class="docs-sidebar-link" href="/constructs/revali_server/context"><span>Overview</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/context/data-sharing"><span>Data Sharing</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/context/meta"><span>Meta</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/context/reflect"><span>Reflect</span></a></li></ul></details></li><li class="docs-sidebar-group-item"><details class="docs-sidebar-group nested"><summary class="docs-sidebar-summary"><span class="docs-sidebar-title">Lifecycle Components</span><span class="docs-sidebar-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span></summary><ul><li><a class="docs-sidebar-link" href="/constructs/revali_server/lifecycle-components"><span>Overview</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/lifecycle-components/components"><span>Components</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/lifecycle-components/observer"><span>Observer</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/lifecycle-components/kits/throttle"><span>Throttle</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/lifecycle-components/advanced/wrapper"><span>Request Wrapper</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/lifecycle-components/advanced/middleware"><span>Middleware</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/lifecycle-components/advanced/guards"><span>Guards</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/lifecycle-components/advanced/interceptors"><span>Interceptors</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/lifecycle-components/advanced/combine-components"><span>Combine Components</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/lifecycle-components/advanced/exception-catchers"><span>Exception Catchers</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/lifecycle-components/advanced/response-handler"><span>Response Handler</span></a></li></ul></details></li><li class="docs-sidebar-group-item"><details class="docs-sidebar-group nested"><summary class="docs-sidebar-summary"><span class="docs-sidebar-title">Access Control</span><span class="docs-sidebar-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span></summary><ul><li><a class="docs-sidebar-link" href="/constructs/revali_server/access-control/allow-origins"><span>Allow Origins</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/access-control/expect-headers"><span>Expect Headers</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/access-control/prevent-headers"><span>Prevent Headers</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/access-control/pre-flight-requests"><span>Pre-flight Requests</span></a></li></ul></details></li><li><a class="docs-sidebar-link" href="/constructs/revali_server/tidbits"><span>Tid Bits</span></a></li></ul></details>
+              </li>
+              <li class="docs-sidebar-group-item">
+                <details class="docs-sidebar-group"><summary class="docs-sidebar-summary"><span class="docs-sidebar-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/></svg></span><span class="docs-sidebar-title">Revali Client</span><span class="docs-sidebar-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span></summary><ul><li><a class="docs-sidebar-link" href="/constructs/revali_client"><span>Overview</span></a></li><li class="docs-sidebar-group-item"><details class="docs-sidebar-group nested"><summary class="docs-sidebar-summary"><span class="docs-sidebar-title">Getting Started</span><span class="docs-sidebar-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span></summary><ul><li><a class="docs-sidebar-link" href="/constructs/revali_client/getting-started/installation"><span>Installation</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_client/getting-started/configure"><span>Configure</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_client/getting-started/storage"><span>Storage</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_client/getting-started/http-interceptors"><span>Interceptors</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_client/getting-started/return-types"><span>Return Types</span></a></li></ul></details></li><li><a class="docs-sidebar-link" href="/constructs/revali_client/generated-code"><span>Generated Code</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_client/resilience"><span>Timeouts &amp; Retries</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_client/integrations/get_it"><span>get_it Integration</span></a></li></ul></details>
+              </li>
+              <li class="docs-sidebar-group-item">
+                <details class="docs-sidebar-group"><summary class="docs-sidebar-summary"><span class="docs-sidebar-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span><span class="docs-sidebar-title">Revali Swagger</span><span class="docs-sidebar-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span></summary><ul><li><a class="docs-sidebar-link" href="/constructs/revali_swagger"><span>Overview</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_swagger/getting-started/installation"><span>Installation</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_swagger/getting-started/configuration"><span>Configuration</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_swagger/annotations"><span>Annotations</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_swagger/type-inference"><span>Type Inference</span></a></li></ul></details>
+              </li>
+              <li class="docs-sidebar-group-item">
+                <details class="docs-sidebar-group" open><summary class="docs-sidebar-summary"><span class="docs-sidebar-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 7.7c0-.6-.4-1.2-.8-1.5l-6.3-3.9a1.72 1.72 0 0 0-1.7 0l-10.3 6c-.5.2-.9.8-.9 1.4v6.6c0 .5.4 1.2.8 1.5l6.3 3.9a1.72 1.72 0 0 0 1.7 0l10.3-6c.5-.3.9-1 .9-1.5Z"/><path d="M10 21.9V14L2.1 9.1"/><path d="m10 14 11.9-6.9"/><path d="M14 19.8v-8.1"/><path d="M18 17.5V9.4"/></svg></span><span class="docs-sidebar-title">Revali Docker</span><span class="docs-sidebar-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span></summary><ul><li><a class="docs-sidebar-link" href="/constructs/revali_docker"><span>Overview</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_docker/installation"><span>Installation</span></a></li><li><a class="docs-sidebar-link active" aria-current="page" href="/constructs/revali_docker/deploy"><span>Deploying</span></a></li><li><a class="docs-sidebar-link" href="/constructs/revali_docker/deploy/fly-io"><span>Fly.io</span></a></li></ul></details>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <main>
+          <div>
+            <div class="content-container">
+              <div class="content-header">
+                <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/constructs">Constructs</a><span class="breadcrumb-sep">/</span><span>Revali Docker</span></nav>
+                <h1>Overview</h1>
+                <p>Deploy your Revali Docker container to production</p>
+              </div>
+              <section class="content">
+                <p>
+                  Once you've generated a Dockerfile with Revali Docker, you're ready to deploy your application to production. This guide covers deployment strategies, platform choices, and best practices for running Revali applications in containers.
+                </p>
+                <h2 id="deployment-process" anchor="true"><span>Deployment Process</span><a href="/constructs/revali_docker/deploy#deployment-process">#</a></h2>
+                <p>Deploying a Revali Docker application typically follows these steps:</p>
+                <ol>
+                  <li><strong>Generate the Dockerfile</strong> - Run <code>revali build</code> to create your Dockerfile</li>
+                  <li><strong>Build the Docker Image</strong> - Compile your application into a container image</li>
+                  <li><strong>Test Locally</strong> - Verify the container works on your machine</li>
+                  <li><strong>Push to Registry</strong> - Upload your image to a container registry</li>
+                  <li><strong>Deploy to Platform</strong> - Deploy the image to your hosting provider</li>
+                  <li><strong>Configure &amp; Monitor</strong> - Set up environment variables, scaling, and monitoring</li>
+                </ol>
+                <hr/>
+                <h2 id="choosing-a-deployment-platform" anchor="true">
+                  <span>Choosing a Deployment Platform</span><a href="/constructs/revali_docker/deploy#choosing-a-deployment-platform">#</a>
+                </h2>
+                <p>
+                  Different platforms offer different trade-offs between simplicity, control, and cost. Here's a comparison:
+                </p>
+                <table>
+                  <thead><tr><th>Platform</th><th>Best For</th><th>Ease of Use</th><th>Pricing</th><th>Free Tier</th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td><a href="/constructs/revali_docker/deploy/fly-io">Fly.io</a></td>
+                      <td>Global deployment, low latency</td>
+                      <td>⭐⭐⭐⭐⭐</td>
+                      <td>Pay-as-you-go</td>
+                      <td>Yes</td>
+                    </tr>
+                    <tr>
+                      <td><a href="https://railway.app/">Railway</a></td>
+                      <td>Quick deployment, hobby projects</td>
+                      <td>⭐⭐⭐⭐⭐</td>
+                      <td>Usage-based</td>
+                      <td>Yes</td>
+                    </tr>
+                    <tr>
+                      <td><a href="https://render.com/">Render</a></td>
+                      <td>Simple setup, managed services</td>
+                      <td>⭐⭐⭐⭐</td>
+                      <td>Fixed pricing</td>
+                      <td>Yes</td>
+                    </tr>
+                    <tr>
+                      <td><a href="https://www.digitalocean.com/products/app-platform/">DigitalOcean App Platform</a></td>
+                      <td>Balanced control &amp; simplicity</td>
+                      <td>⭐⭐⭐⭐</td>
+                      <td>Fixed pricing</td>
+                      <td>No</td>
+                    </tr>
+                    <tr>
+                      <td><a href="https://www.heroku.com/">Heroku</a></td>
+                      <td>Beginner-friendly, add-ons</td>
+                      <td>⭐⭐⭐⭐</td>
+                      <td>Dyno-based</td>
+                      <td>No</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <hr/>
+                <h2 id="whats-next" anchor="true"><span>What's Next?</span><a href="/constructs/revali_docker/deploy#whats-next">#</a></h2>
+                <ul>
+                  <li>
+                    <strong><a href="/constructs/revali_docker/deploy/fly-io">Fly.io Deployment Guide</a></strong> - Detailed Fly.io setup
+                  </li>
+                  <li>
+                    <strong><a href="/constructs/revali_docker">Revali Docker Overview</a></strong> - Learn more about Docker generation
+                  </li>
+                </ul>
+                <p>Ready to deploy? Choose a platform above and follow their quick start guide!</p>
+              </section>
+              <div class="content-footer">
+                <nav class="page-nav" aria-label="Pagination">
+                  <a class="page-nav-link page-nav-prev" href="/constructs/revali_docker/installation"><span class="page-nav-label">Previous</span><span class="page-nav-title">Installation</span></a>
+                  <a class="page-nav-link page-nav-next" href="/constructs/revali_docker/deploy/fly-io"><span class="page-nav-label">Next</span><span class="page-nav-title">Fly.io</span></a>
+                </nav>
+              </div>
+            </div>
+            <aside class="toc">
+              <div>
+                <h3>On this page</h3>
+                <ul>
+                  <li style="padding-left: 0em"><a href="/constructs/revali_docker/deploy#deployment-process">Deployment Process</a></li>
+                  <li style="padding-left: 0em">
+                    <a href="/constructs/revali_docker/deploy#choosing-a-deployment-platform">Choosing a Deployment Platform</a>
+                  </li>
+                  <li style="padding-left: 0em"><a href="/constructs/revali_docker/deploy#whats-next">What's Next?</a></li>
+                </ul>
+              </div>
+            </aside>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
